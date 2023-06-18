@@ -1,5 +1,7 @@
 export const UserPages = () => {
     return (
-        <div>Users</div>
+        <div>
+            Users
+            </div>
     )
 }
