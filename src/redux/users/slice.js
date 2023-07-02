@@ -1,6 +1,5 @@
-import { getUsers, getUserId } from './operation';
+import { getUsers, getUserId, deleteUser } from './operation';
 import { createSlice } from '@reduxjs/toolkit';
-
 
 const sliceUsers = createSlice({
   name: 'users',
@@ -16,28 +15,39 @@ const sliceUsers = createSlice({
     },
     [getUsers.fulfilled](state, action) {
       state.users = action.payload;
-        state.isLoading = false;
-        state.error = null;
+      state.isLoading = false;
+      state.error = null;
     },
     [getUsers.rejected](state, action) {
       state.error = action.payload;
       state.isLoading = false;
     },
     [getUserId.pending](state) {
-        state.isLoading = true;
+      state.isLoading = true;
     },
     [getUserId.fulfilled](state, action) {
-        state.currentUser = action.payload;
-        state.isLoading = false;
-        state.error = null;
+      state.currentUser = action.payload;
+      state.isLoading = false;
+      state.error = null;
     },
     [getUserId.rejected](state, action) {
-        state.isLoading = false;
-        state.error = action.payload;
-    }
-
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [deleteUser.pending](state) {
+      state.isLoading = true;
+    },
+    [deleteUser.fulfilled](state, action) {
+      state.users = state.users.filter(({ id }) => id !== action.payload);
+      state.isLoading = false;
+      state.error = null;
+      state.currentUser = null;
+    },
+    [deleteUser.rejected](state, action) {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
   },
 });
 
-
-export const userReducer = sliceUsers.reducer
+export const userReducer = sliceUsers.reducer;

@@ -17,10 +17,11 @@ export const UserPages = () => {
       <ul>
         {users.map(({ name, id }) => (
           <li key={id}>
-            <Link>{name}</Link>
+            <Link to={id}>{name}</Link>
           </li>
         ))}
       </ul>
+      <Link to="add">Add user</Link>
     </div>
   );
 };
